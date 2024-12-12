@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>House Price Prediction</h1>
+    <form action="/predict" method="POST">
+        <label for="avg_income">Average Area Income:</label>
+        <input type="number" step="any" name="avg_income" id="avg_income" required>
+        
+        <label for="house_age">Average Area House Age:</label>
+        <input type="number" step="any" name="house_age" id="house_age" required>
+        
+        <label for="num_rooms">Average Area Number of Rooms:</label>
+        <input type="number" step="any" name="num_rooms" id="num_rooms" required>
+        
+        <label for="num_bedrooms">Average Area Number of Bedrooms:</label>
+        <input type="number" step="any" name="num_bedrooms" id="num_bedrooms" required>
+        
+        <label for="population">Area Population:</label>
+        <input type="number" step="any" name="population" id="population" required>
+        
+        <label for="model">Select Model:</label>
+        <select name="model" id="model">
+            <option value="LinearRegression">Linear Regression</option>
+            <option value="Ridge">Ridge Regression</option>
+            <option value="Lasso">Lasso Regression</option>
+            <option value="RandomForest">Random Forest</option>
+            <option value="SVR">Support Vector Regressor</option>
+            <option value="MLPRegressor">Neural Network (MLP)</option>
+            <option value="XGBoost">XGBoost</option>
+            <option value="LightGBM">LightGBM</option>
+        </select>
+        
+        <button type="submit">Predict</button>
+    </form>
+
+    <h2>Model Evaluation Results</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Model</th>
+                <th>MAE</th>
+                <th>MSE</th>
+                <th>R2</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for model in model_performance %}
+                <tr>
+                    <td>{{ model['Model'] }}</td>
+                    <td>{{ model['MAE'] }}</td>
+                    <td>{{ model['MSE'] }}</td>
+                    <td>{{ model['R2'] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
